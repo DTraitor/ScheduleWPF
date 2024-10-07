@@ -1,23 +1,34 @@
-﻿using System.Text;
+﻿using System.Reactive.Disposables;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using ReactiveUI;
+using WPFFront.ViewModels;
 
 namespace WPFFront;
 
-/// <summary>
-/// Interaction logic for MainWindow.xaml
-/// </summary>
-public partial class MainWindow : Window
+public partial class MainWindow
 {
     public MainWindow()
     {
         InitializeComponent();
+        datePicker.SelectedDate = DateTime.Now.Date;
+        ViewModel = new AppViewModel();
+
+        this.WhenActivated(disposableRegistration =>
+        {
+            this.OneWayBind(ViewModel,
+                    viewModel => viewModel.SelectedSchedule,
+                    view => view.searchResultsListBox.ItemsSource)
+                .DisposeWith(disposableRegistration);
+
+            this.Bind(ViewModel,
+                    viewModel => viewModel.SelectedDate,
+                    view => view.datePicker.SelectedDate)
+                .DisposeWith(disposableRegistration);
+        });
+    }
+
+    private void StopHere(object sender, RoutedEventArgs e)
+    {
+        return;
     }
 }

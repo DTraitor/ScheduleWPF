@@ -9,9 +9,21 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="MugenMvvmToolkit" Version="6.5.0" />
+      <PackageReference Include="NuGet.Protocol" Version="6.11.1" />
       <PackageReference Include="ReactiveMarbles.ObservableEvents.SourceGenerator" Version="1.3.1" />
       <PackageReference Include="ReactiveUI.WPF" Version="20.1.63" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Main\Main.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Page Update="Views\LessonView.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
     </ItemGroup>
 
 </Project>
