@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Reactive;
+using System.Reactive.Linq;
+using Main;
 using Main.ScheduleClasses;
 using ReactiveUI;
 
@@ -7,15 +9,20 @@ namespace WPFFront.ViewModels;
 
 public class LessonViewModel : ReactiveObject
 {
-    private readonly Lesson _lesson;
+    private Lesson? _lesson;
+    private readonly ScheduleDbContext _context;
+    public bool IsActive => _lesson != null;
 
-    public LessonViewModel(Lesson lesson)
+    public LessonViewModel(Lesson lesson, ScheduleDbContext context)
     {
+        _context = context;
         _lesson = lesson;
 
         DeleteLesson = ReactiveCommand.Create(() =>
         {
-
+            _context.Lessons.Remove(_lesson);
+            _context.SaveChanges();
+            _lesson = null;
         });
     }
 

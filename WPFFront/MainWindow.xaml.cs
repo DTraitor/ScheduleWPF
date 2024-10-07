@@ -1,5 +1,8 @@
 ﻿using System.Reactive.Disposables;
 using System.Windows;
+using Main;
+using Main.ScheduleClasses;
+using Microsoft.EntityFrameworkCore;
 using ReactiveUI;
 using WPFFront.ViewModels;
 
@@ -11,7 +14,11 @@ public partial class MainWindow
     {
         InitializeComponent();
         datePicker.SelectedDate = DateTime.Now.Date;
+        typeComboBox.ItemsSource = Enum.GetValues(typeof(LessonType)).Cast<LessonType>();
+        weekNumberComboBox.ItemsSource = Enum.GetValues(typeof(WeekNumber)).Cast<WeekNumber>();
+        dayNumberComboBox.ItemsSource = Enum.GetValues(typeof(DayOfWeek)).Cast<DayOfWeek>();
         ViewModel = new AppViewModel();
+        teacherComboBox.ItemsSource = ViewModel.Teachers;
 
         this.WhenActivated(disposableRegistration =>
         {
@@ -24,11 +31,83 @@ public partial class MainWindow
                     viewModel => viewModel.SelectedDate,
                     view => view.datePicker.SelectedDate)
                 .DisposeWith(disposableRegistration);
+
+            this.Bind(ViewModel,
+                viewModel => viewModel.Name,
+                view => view.nameTextBox.Text)
+                .DisposeWith(disposableRegistration);
+
+            //type
+            this.Bind(ViewModel,
+                viewModel => viewModel.Type,
+                view => view.typeComboBox.SelectedItem)
+                .DisposeWith(disposableRegistration);
+
+            //desc
+            this.Bind(ViewModel,
+                viewModel => viewModel.Description,
+                view => view.descriptionTextBox.Text)
+                .DisposeWith(disposableRegistration);
+            //teacher
+            this.Bind(ViewModel,
+                viewModel => viewModel.Teacher,
+                view => view.teacherComboBox.SelectedItem)
+                .DisposeWith(disposableRegistration);
+            //location
+            this.Bind(ViewModel,
+                viewModel => viewModel.Location,
+                view => view.locationTextBox.Text)
+                .DisposeWith(disposableRegistration);
+            //begin date
+            this.Bind(ViewModel,
+                viewModel => viewModel.Begin,
+                view => view.beginDatePicker.SelectedDate)
+                .DisposeWith(disposableRegistration);
+            //end date
+            this.Bind(ViewModel,
+                viewModel => viewModel.End,
+                view => view.endDatePicker.SelectedDate)
+                .DisposeWith(disposableRegistration);
+            //begin time
+            this.Bind(ViewModel,
+                viewModel => viewModel.BeginTime,
+                view => view.beginTimePicker.Value)
+                .DisposeWith(disposableRegistration);
+            //end time
+            this.Bind(ViewModel,
+                viewModel => viewModel.EndTime,
+                view => view.endTimePicker.Value)
+                .DisposeWith(disposableRegistration);
+            //week number
+            this.Bind(ViewModel,
+                viewModel => viewModel.SelectedWeekNumber,
+                view => view.weekNumberComboBox.SelectedItem)
+                .DisposeWith(disposableRegistration);
+            //day number
+            this.Bind(ViewModel,
+                viewModel => viewModel.DayOfWeek,
+                view => view.dayNumberComboBox.SelectedItem)
+                .DisposeWith(disposableRegistration);
+
+            //bind command
+            this.BindCommand(ViewModel,
+                    viewModel => viewModel.AddNewLesson,
+                    view => view.addButton)
+                .DisposeWith(disposableRegistration);
         });
     }
 
     private void StopHere(object sender, RoutedEventArgs e)
     {
-        return;
+        //add new teacher
+        var newTeacher = new Teacher
+        {
+            Name = "Temp",
+            Surname = "Temp",
+            Patronymic = "Temp",
+            Title = "Temp"
+        };
+        ViewModel._context.Teachers.Add(newTeacher);
+        ViewModel._context.SaveChanges();
     }
 }

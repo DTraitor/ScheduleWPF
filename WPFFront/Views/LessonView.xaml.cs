@@ -1,4 +1,5 @@
 ﻿using System.Reactive.Disposables;
+using System.Windows;
 using ReactiveUI;
 
 namespace WPFFront.Views;
@@ -33,6 +34,18 @@ public partial class LessonView
             this.OneWayBind(ViewModel,
                     viewModel => viewModel.TeacherName,
                     view => view.Teacher.Text)
+                .DisposeWith(disposableRegistration);
+
+            //set visibility to hidden if lesson is not active
+            this.OneWayBind(ViewModel,
+                    viewModel => viewModel.IsActive,
+                    view => view.Visibility,
+                    isActive => isActive ? Visibility.Visible : Visibility.Hidden)
+                .DisposeWith(disposableRegistration);
+
+            this.BindCommand(ViewModel,
+                    viewModel => viewModel.DeleteLesson,
+                    view => view.DeleteButton)
                 .DisposeWith(disposableRegistration);
         });
     }

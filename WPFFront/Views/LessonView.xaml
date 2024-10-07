@@ -25,6 +25,6 @@
         <TextBox Grid.Row="1" Grid.Column="0" x:Name="LessonType" />
         <TextBox Grid.Row="1" Grid.Column="1" x:Name="Teacher" />
         <TextBox Grid.Row="2" Grid.Column="0" x:Name="Description" />
-        <Button Grid.Row="2" Grid.Column="1">Delete</Button>
+        <Button Grid.Row="2" Grid.Column="1" x:Name="DeleteButton">Delete</Button>
     </Grid>
 </reactiveui:ReactiveUserControl>
