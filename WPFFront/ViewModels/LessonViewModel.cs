@@ -35,7 +35,7 @@ public class LessonViewModel : ReactiveObject
     public string Description => _lesson.Description;
     public string Location => _lesson.Location;
     public string TeacherName => _lesson.Teacher.FullName;
-    public string LessonTime => $"{_lesson.BeginTime} - {_lesson.EndTime}";
+    public string LessonTime => $"{_lesson.BeginTime:hh\\:mm} - {_lesson.EndTime:hh\\:mm}";
     public string LessonType => _lesson.LType.ToString();
 
     public ReactiveCommand<Unit, Unit> DeleteLesson { get; }

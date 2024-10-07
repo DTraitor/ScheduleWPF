@@ -111,7 +111,6 @@ public class AppViewModel : ReactiveObject
             .WhenAnyValue(x => x.SelectedDate)
             .Throttle(TimeSpan.FromMilliseconds(800))
             .SelectMany(GetDayScheduleViewModels)
-            .DistinctUntilChanged()
             .ObserveOn(RxApp.MainThreadScheduler)
             .ToProperty(this, x => x.DayScheduleViewModels);
 

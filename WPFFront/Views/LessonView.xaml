@@ -8,34 +8,29 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:viewModels="clr-namespace:WPFFront.ViewModels"
     mc:Ignorable="d"
+    Margin="0,2"
     d:DesignHeight="300" d:DesignWidth="300">
-    <Grid Margin="3" Background="Gray" >
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Margin="0,0,0,4">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <TextBlock Text="Lesson" FontWeight="Bold" IsEnabled="False" />
-            <TextBlock Text="13:30 - 15:15" TextAlignment="Right" IsEnabled="False" Grid.Column="1" />
-        </Grid>
-        <Grid Grid.Row="1">
+    <Border BorderThickness="1" BorderBrush="Black" CornerRadius="5">
+        <Grid Margin="3" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
+            <Grid Grid.Row="0" Margin="0,0,0,4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="Олена Олександрівна" FontStyle="Italic" />
-                <TextBlock Grid.Column="1" TextAlignment="Right" Text="Лабораторна" FontStyle="Italic" />
+                <TextBlock Grid.Column="0" Text="Lesson" FontWeight="Bold" IsEnabled="False" x:Name="LessonName" />
+                <TextBlock Text="13:30 - 15:15" TextAlignment="Right" IsEnabled="False" Grid.Column="1" x:Name="LessonTime" />
             </Grid>
-            <TextBlock Grid.Row="1" Text="А тут у нас буде опис" FontWeight="Bold" />
+            <TextBlock Grid.Row="1" TextAlignment="Left" Text="None" FontStyle="Italic" x:Name="LessonType" />
+            <TextBlock Grid.Row="2" Text="Олена Олександрівна" FontStyle="Italic" x:Name="Teacher" />
+            <TextBlock Grid.Row="3" Text="6.105" FontStyle="Italic" x:Name="Location" />
+            <TextBlock Grid.Row="4" Text="А тут у нас буде опис" FontWeight="Bold" x:Name="Description" />
         </Grid>
-    </Grid>
+    </Border>
 </reactiveui:ReactiveUserControl>
