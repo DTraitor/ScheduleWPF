@@ -6,25 +6,36 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:WPFFront.Views"
     xmlns:viewModels="clr-namespace:WPFFront.ViewModels"
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
+    <Grid Margin="3" Background="Gray" >
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <TextBox Grid.Row="0" Grid.Column="0" x:Name="LessonName" />
-        <TextBox Grid.Row="0" Grid.Column="1" x:Name="LessonTime" />
-        <TextBox Grid.Row="1" Grid.Column="0" x:Name="LessonType" />
-        <TextBox Grid.Row="1" Grid.Column="1" x:Name="Teacher" />
-        <TextBox Grid.Row="2" Grid.Column="0" x:Name="Description" />
-        <Button Grid.Row="2" Grid.Column="1" x:Name="DeleteButton">Delete</Button>
+        <Grid Grid.Row="0" Margin="0,0,0,4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Lesson" FontWeight="Bold" IsEnabled="False" />
+            <TextBlock Text="13:30 - 15:15" TextAlignment="Right" IsEnabled="False" Grid.Column="1" />
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Олена Олександрівна" FontStyle="Italic" />
+                <TextBlock Grid.Column="1" TextAlignment="Right" Text="Лабораторна" FontStyle="Italic" />
+            </Grid>
+            <TextBlock Grid.Row="1" Text="А тут у нас буде опис" FontWeight="Bold" />
+        </Grid>
     </Grid>
 </reactiveui:ReactiveUserControl>

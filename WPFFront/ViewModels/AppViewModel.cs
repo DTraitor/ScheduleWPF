@@ -1,6 +1,8 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Reactive;
 using System.Reactive.Linq;
+using System.Windows.Controls;
 using Main;
 using Main.ScheduleClasses;
 using Microsoft.EntityFrameworkCore;
@@ -11,17 +13,12 @@ namespace WPFFront.ViewModels;
 public class AppViewModel : ReactiveObject
 {
     public ScheduleDbContext _context = new();
-
     private DateTime _selectedDate;
     public DateTime SelectedDate
     {
         get => _selectedDate;
         set => this.RaiseAndSetIfChanged(ref _selectedDate, value);
     }
-
-    private readonly ObservableAsPropertyHelper<IEnumerable<LessonViewModel>> _selectedSchedule;
-    public IEnumerable<LessonViewModel> SelectedSchedule => _selectedSchedule.Value;
-
     public readonly IEnumerable<Teacher> Teachers;
 
     private string? _name;
@@ -101,20 +98,30 @@ public class AppViewModel : ReactiveObject
         set => this.RaiseAndSetIfChanged(ref _dayOfWeek, value);
     }
 
+    //observable list of DayScheduleViewModels
+    private readonly ObservableAsPropertyHelper<ObservableCollection<DayScheduleViewModel>> _dayScheduleViewModels;
+    public ObservableCollection<DayScheduleViewModel> DayScheduleViewModels => _dayScheduleViewModels.Value;
+
     public AppViewModel()
     {
         _context.Teachers.Load();
         Teachers = _context.Teachers.Local.ToObservableCollection();
-        _selectedSchedule = this
+
+        _dayScheduleViewModels = this
             .WhenAnyValue(x => x.SelectedDate)
             .Throttle(TimeSpan.FromMilliseconds(800))
-            .SelectMany(GetSchedule)
+            .SelectMany(GetDayScheduleViewModels)
             .DistinctUntilChanged()
             .ObserveOn(RxApp.MainThreadScheduler)
-            .ToProperty(this, x => x.SelectedSchedule);
+            .ToProperty(this, x => x.DayScheduleViewModels);
+
+        _dayScheduleViewModels.ThrownExceptions.Subscribe(ex =>
+        {
+            return;
+        });
 
         AddNewLesson = ReactiveCommand.CreateFromTask(
-            async () =>
+        async () =>
         {
             if (_name == null || _type == null || _description == null || _location == null || _teacher == null || _begin == null || _end == null || _beginTime == null || _endTime == null || _selectedWeekNumber == null || _dayOfWeek == null)
             {
@@ -137,26 +144,23 @@ public class AppViewModel : ReactiveObject
             };
             _context.Lessons.Add(lesson);
             await _context.SaveChangesAsync();
-        });
 
-        _selectedSchedule.ThrownExceptions.Subscribe(ex =>
-        {
-            Debug.WriteLine(ex);
+            SelectedDate = SelectedDate;
         });
 
         SelectedDate = DateTime.Now;
     }
 
-    private async Task<IEnumerable<LessonViewModel>> GetSchedule(DateTime date)
+    private async Task<ObservableCollection<DayScheduleViewModel>> GetDayScheduleViewModels(DateTime date)
     {
-        int yearToUse = date.Month < 9 ? date.Year - 1 : date.Year;
-        int weekNumberInt = (new DateTime(yearToUse, 9, 1) - date).Days / 7;
-        WeekNumber currentWeekNum = weekNumberInt % 2 == 0 ? Main.ScheduleClasses.WeekNumber.First : Main.ScheduleClasses.WeekNumber.Second;
-        return await _context.Lessons
-            .Where(x => date >= x.BeginDate && date <= x.EndDate && x.WeekNumber == currentWeekNum && x.DayOfWeek == date.DayOfWeek)
-            .Include(l => l.Teacher)
-            .Select(x => new LessonViewModel(x, _context))
-            .ToListAsync();
+        var dayScheduleViewModels = new ObservableCollection<DayScheduleViewModel>();
+        foreach (var day in Enum.GetValues(typeof(DayOfWeek)).Cast<DayOfWeek>())
+        {
+            DateTime dateAtDayOfWeek = date.AddDays((int)day - (int)date.DayOfWeek);
+            dayScheduleViewModels.Add(new DayScheduleViewModel(day, dateAtDayOfWeek));
+        }
+
+        return dayScheduleViewModels;
     }
 
     public ReactiveCommand<Unit, Unit> AddNewLesson { get; }

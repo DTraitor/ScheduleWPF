@@ -1,0 +1,27 @@
+﻿<reactiveUi:ReactiveUserControl
+    x:Class="WPFFront.Views.DayScheduleView"
+    x:TypeArguments="viewModels:DayScheduleViewModel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:WPFFront.Views"
+    xmlns:viewModels="clr-namespace:WPFFront.ViewModels"
+    xmlns:reactiveUi="http://reactiveui.net"
+    mc:Ignorable="d"
+    Margin="5,0"
+    d:DesignHeight="300" d:DesignWidth="200">
+    <StackPanel Orientation="Vertical">
+        <TextBlock x:Name="DayOfTheWeek" TextAlignment="Center" FontWeight="Bold" FontSize="16" IsEnabled="False">
+            Some Day
+        </TextBlock>
+        <Separator Margin="0,5" />
+        <ItemsControl x:Name="LessonList">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+    </StackPanel>
+</reactiveUi:ReactiveUserControl>

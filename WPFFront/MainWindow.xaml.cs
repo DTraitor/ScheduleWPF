@@ -1,10 +1,12 @@
 ﻿using System.Reactive.Disposables;
 using System.Windows;
+using System.Windows.Controls;
 using Main;
 using Main.ScheduleClasses;
 using Microsoft.EntityFrameworkCore;
 using ReactiveUI;
 using WPFFront.ViewModels;
+using WPFFront.Views;
 
 namespace WPFFront;
 
@@ -22,9 +24,10 @@ public partial class MainWindow
 
         this.WhenActivated(disposableRegistration =>
         {
+            //WeekList
             this.OneWayBind(ViewModel,
-                    viewModel => viewModel.SelectedSchedule,
-                    view => view.searchResultsListBox.ItemsSource)
+                    viewModel => viewModel.DayScheduleViewModels,
+                    view => view.WeekList.ItemsSource)
                 .DisposeWith(disposableRegistration);
 
             this.Bind(ViewModel,
@@ -99,15 +102,6 @@ public partial class MainWindow
 
     private void StopHere(object sender, RoutedEventArgs e)
     {
-        //add new teacher
-        var newTeacher = new Teacher
-        {
-            Name = "Temp",
-            Surname = "Temp",
-            Patronymic = "Temp",
-            Title = "Temp"
-        };
-        ViewModel._context.Teachers.Add(newTeacher);
-        ViewModel._context.SaveChanges();
+        return;
     }
 }

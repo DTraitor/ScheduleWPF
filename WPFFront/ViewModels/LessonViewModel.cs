@@ -11,7 +11,12 @@ public class LessonViewModel : ReactiveObject
 {
     private Lesson? _lesson;
     private readonly ScheduleDbContext _context;
-    public bool IsActive => _lesson != null;
+    private bool _isActive = true;
+    public bool IsActive
+    {
+        get => _isActive;
+        set => this.RaiseAndSetIfChanged(ref this._isActive, value);
+    }
 
     public LessonViewModel(Lesson lesson, ScheduleDbContext context)
     {
@@ -22,7 +27,7 @@ public class LessonViewModel : ReactiveObject
         {
             _context.Lessons.Remove(_lesson);
             _context.SaveChanges();
-            _lesson = null;
+            IsActive = false;
         });
     }
 
