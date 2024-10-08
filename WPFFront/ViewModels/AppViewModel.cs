@@ -12,8 +12,9 @@ namespace WPFFront.ViewModels;
 
 public class AppViewModel : ReactiveObject
 {
+    private readonly SemaphoreSlim _semaphore  = new SemaphoreSlim(1, 1);  // Semaphore to control access;
     public ScheduleDbContext _context = new();
-    private DateTime _selectedDate;
+    private DateTime _selectedDate = DateTime.Now;
     public DateTime SelectedDate
     {
         get => _selectedDate;
@@ -99,25 +100,14 @@ public class AppViewModel : ReactiveObject
     }
 
     //observable list of DayScheduleViewModels
-    private readonly ObservableAsPropertyHelper<ObservableCollection<DayScheduleViewModel>> _dayScheduleViewModels;
-    public ObservableCollection<DayScheduleViewModel> DayScheduleViewModels => _dayScheduleViewModels.Value;
+    public IEnumerable<DayScheduleViewModel> DayScheduleViewModels { get; }
 
     public AppViewModel()
     {
         _context.Teachers.Load();
         Teachers = _context.Teachers.Local.ToObservableCollection();
 
-        _dayScheduleViewModels = this
-            .WhenAnyValue(x => x.SelectedDate)
-            .Throttle(TimeSpan.FromMilliseconds(800))
-            .SelectMany(GetDayScheduleViewModels)
-            .ObserveOn(RxApp.MainThreadScheduler)
-            .ToProperty(this, x => x.DayScheduleViewModels);
-
-        _dayScheduleViewModels.ThrownExceptions.Subscribe(ex =>
-        {
-            return;
-        });
+        DayScheduleViewModels = GetDayScheduleViewModels(DateTime.Now);
 
         AddNewLesson = ReactiveCommand.CreateFromTask(
         async () =>
@@ -150,13 +140,13 @@ public class AppViewModel : ReactiveObject
         SelectedDate = DateTime.Now;
     }
 
-    private async Task<ObservableCollection<DayScheduleViewModel>> GetDayScheduleViewModels(DateTime date)
+    private IEnumerable<DayScheduleViewModel> GetDayScheduleViewModels(DateTime date)
     {
-        var dayScheduleViewModels = new ObservableCollection<DayScheduleViewModel>();
+        var dayScheduleViewModels = new List<DayScheduleViewModel>();
         foreach (var day in Enum.GetValues(typeof(DayOfWeek)).Cast<DayOfWeek>())
         {
             DateTime dateAtDayOfWeek = date.AddDays((int)day - (int)date.DayOfWeek);
-            dayScheduleViewModels.Add(new DayScheduleViewModel(day, dateAtDayOfWeek));
+            dayScheduleViewModels.Add(new DayScheduleViewModel(day, dateAtDayOfWeek, this, _context, _semaphore));
         }
 
         return dayScheduleViewModels;
