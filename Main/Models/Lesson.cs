@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Main.ScheduleClasses;
+namespace Main.Models;
 
 public class Lesson
 {

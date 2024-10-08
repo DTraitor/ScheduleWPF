@@ -6,7 +6,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:viewModels="clr-namespace:WPFFront.ViewModels"
+    xmlns:viewModels="clr-namespace:Main.ViewModels;assembly=Main"
     mc:Ignorable="d"
     Margin="0,2"
     d:DesignHeight="300" d:DesignWidth="300">

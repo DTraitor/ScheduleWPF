@@ -6,11 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-    xmlns:reactivedemo="clr-namespace:WPFFront"
     xmlns:reactiveui="http://reactiveui.net"
-    xmlns:wpfFront="clr-namespace:WPFFront"
-    xmlns:viewModels="clr-namespace:WPFFront.ViewModels"
-    xmlns:views="clr-namespace:WPFFront.Views"
+    xmlns:viewModels="clr-namespace:Main.ViewModels;assembly=Main"
     WindowState="Maximized"
     Title="Schedule Browser" Height="1080" Width="1920"
     mc:Ignorable="d">

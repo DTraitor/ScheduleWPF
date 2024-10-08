@@ -1,12 +1,8 @@
 ﻿using System.Reactive.Disposables;
 using System.Windows;
-using System.Windows.Controls;
-using Main;
-using Main.ScheduleClasses;
-using Microsoft.EntityFrameworkCore;
+using Main.Models;
+using Main.ViewModels;
 using ReactiveUI;
-using WPFFront.ViewModels;
-using WPFFront.Views;
 
 namespace WPFFront;
 

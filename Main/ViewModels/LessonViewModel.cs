@@ -1,11 +1,10 @@
 ﻿using System.Diagnostics;
 using System.Reactive;
 using System.Reactive.Linq;
-using Main;
-using Main.ScheduleClasses;
+using Main.Models;
 using ReactiveUI;
 
-namespace WPFFront.ViewModels;
+namespace Main.ViewModels;
 
 public class LessonViewModel : ReactiveObject
 {

@@ -2,13 +2,11 @@
 using System.Diagnostics;
 using System.Reactive;
 using System.Reactive.Linq;
-using System.Windows.Controls;
-using Main;
-using Main.ScheduleClasses;
+using Main.Models;
 using Microsoft.EntityFrameworkCore;
 using ReactiveUI;
 
-namespace WPFFront.ViewModels;
+namespace Main.ViewModels;
 
 public class AppViewModel : ReactiveObject
 {

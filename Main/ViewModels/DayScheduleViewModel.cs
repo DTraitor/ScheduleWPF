@@ -1,13 +1,12 @@
 ﻿using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
-using Main;
-using Main.ScheduleClasses;
+using Main.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using ReactiveUI;
 
-namespace WPFFront.ViewModels;
+namespace Main.ViewModels;
 
 public class DayScheduleViewModel : ReactiveObject
 {

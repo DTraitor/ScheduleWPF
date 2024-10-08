@@ -1,4 +1,4 @@
-﻿namespace Main.ScheduleClasses;
+﻿namespace Main.Models;
 
 public enum WeekNumber
 {

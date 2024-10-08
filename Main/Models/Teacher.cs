@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Main.ScheduleClasses;
+namespace Main.Models;
 
 public class Teacher
 {

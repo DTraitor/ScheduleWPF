@@ -19,7 +19,7 @@ namespace Main.Migrations
                 .HasAnnotation("ProductVersion", "8.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("Main.ScheduleClasses.Lesson", b =>
+            modelBuilder.Entity("Main.Models.Lesson", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -68,7 +68,7 @@ namespace Main.Migrations
                     b.ToTable("Lessons");
                 });
 
-            modelBuilder.Entity("Main.ScheduleClasses.Teacher", b =>
+            modelBuilder.Entity("Main.Models.Teacher", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -94,9 +94,9 @@ namespace Main.Migrations
                     b.ToTable("Teachers");
                 });
 
-            modelBuilder.Entity("Main.ScheduleClasses.Lesson", b =>
+            modelBuilder.Entity("Main.Models.Lesson", b =>
                 {
-                    b.HasOne("Main.ScheduleClasses.Teacher", "Teacher")
+                    b.HasOne("Main.Models.Teacher", "Teacher")
                         .WithMany()
                         .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.Cascade)

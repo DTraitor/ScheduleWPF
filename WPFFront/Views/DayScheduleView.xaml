@@ -6,7 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:WPFFront.Views"
-    xmlns:viewModels="clr-namespace:WPFFront.ViewModels"
+    xmlns:viewModels="clr-namespace:Main.ViewModels;assembly=Main"
     xmlns:reactiveUi="http://reactiveui.net"
     mc:Ignorable="d"
     Margin="5,0"

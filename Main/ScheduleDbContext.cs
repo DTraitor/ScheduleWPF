@@ -1,4 +1,4 @@
-﻿using Main.ScheduleClasses;
+﻿using Main.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Main;
@@ -10,7 +10,12 @@ public class ScheduleDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseMySQL("Server=localhost;Database=schedule;Uid=dtraitor;Pwd=123123;");
+        optionsBuilder.UseMySQL(
+            $"Server={Environment.GetEnvironmentVariable("DB_SERVER")};" +
+            $"Database={Environment.GetEnvironmentVariable("DB_NAME")};" +
+            $"Uid={Environment.GetEnvironmentVariable("DB_USER")};" +
+            $"Pwd={Environment.GetEnvironmentVariable("DB_PASS")};"
+            );
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
