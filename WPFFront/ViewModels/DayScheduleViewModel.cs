@@ -63,7 +63,8 @@ public class DayScheduleViewModel : ReactiveObject
             return await _context.Lessons
                 .Where(x => date >= x.BeginDate && date <= x.EndDate && x.WeekNumber == currentWeekNum && x.DayOfWeek == date.DayOfWeek)
                 .Include(l => l.Teacher)
-                .Select(x => new LessonViewModel(x, _context))
+                .OrderBy(x => x.BeginTime)
+                .Select(x => new LessonViewModel(x, _context, _semaphore))
                 .ToListAsync();
         }
         finally

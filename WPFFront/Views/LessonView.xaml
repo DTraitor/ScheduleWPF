@@ -10,7 +10,7 @@
     mc:Ignorable="d"
     Margin="0,2"
     d:DesignHeight="300" d:DesignWidth="300">
-    <Border BorderThickness="1" BorderBrush="Black" CornerRadius="5">
+    <Border BorderThickness="1" BorderBrush="Black" CornerRadius="5" ClipToBounds="True">
         <Grid Margin="3" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -18,19 +18,27 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Margin="0,0,0,4">
+            <TextBlock Grid.Row="0" Text="Lesson" FontWeight="Bold" IsEnabled="False" x:Name="LessonName" />
+            <Grid Grid.Row="1" Margin="0,0,0,4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="Lesson" FontWeight="Bold" IsEnabled="False" x:Name="LessonName" />
+                <TextBlock Grid.Column="0" TextAlignment="Left" Text="None" FontStyle="Italic" x:Name="LessonType" />
                 <TextBlock Text="13:30 - 15:15" TextAlignment="Right" IsEnabled="False" Grid.Column="1" x:Name="LessonTime" />
             </Grid>
-            <TextBlock Grid.Row="1" TextAlignment="Left" Text="None" FontStyle="Italic" x:Name="LessonType" />
             <TextBlock Grid.Row="2" Text="Олена Олександрівна" FontStyle="Italic" x:Name="Teacher" />
             <TextBlock Grid.Row="3" Text="6.105" FontStyle="Italic" x:Name="Location" />
             <TextBlock Grid.Row="4" Text="А тут у нас буде опис" FontWeight="Bold" x:Name="Description" />
+            <Button Grid.Row="5" Content="X" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="Tomato" Margin="0,0,-4,-4" Width="20" Height="20" x:Name="DeleteLesson">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="5,0,5,0"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
         </Grid>
     </Border>
 </reactiveui:ReactiveUserControl>

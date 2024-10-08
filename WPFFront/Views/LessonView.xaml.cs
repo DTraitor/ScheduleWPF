@@ -41,16 +41,10 @@ public partial class LessonView
                     view => view.Teacher.Text)
                 .DisposeWith(disposableRegistration);
 
-            //this.OneWayBind(ViewModel,
-            //        viewModel => viewModel.IsActive,
-            //        view => view.DeleteButton.Visibility,
-            //        isActive => isActive ? Visibility.Visible : Visibility.Collapsed)
-            //    .DisposeWith(disposableRegistration);
-//
-            //this.BindCommand(ViewModel,
-            //        viewModel => viewModel.DeleteLesson,
-            //        view => view.DeleteButton)
-            //    .DisposeWith(disposableRegistration);
+            this.BindCommand(ViewModel,
+                    viewModel => viewModel.DeleteLesson,
+                    view => view.DeleteLesson)
+                .DisposeWith(disposableRegistration);
         });
     }
 }

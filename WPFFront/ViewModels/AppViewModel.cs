@@ -137,6 +137,16 @@ public class AppViewModel : ReactiveObject
             SelectedDate = SelectedDate;
         });
 
+        NextWeek = ReactiveCommand.Create(() =>
+        {
+            SelectedDate = SelectedDate.AddDays(7);
+        });
+
+        PreviousWeek = ReactiveCommand.Create(() =>
+        {
+            SelectedDate = SelectedDate.AddDays(-7);
+        });
+
         SelectedDate = DateTime.Now;
     }
 
@@ -153,4 +163,6 @@ public class AppViewModel : ReactiveObject
     }
 
     public ReactiveCommand<Unit, Unit> AddNewLesson { get; }
+    public ReactiveCommand<Unit, Unit> NextWeek { get; }
+    public ReactiveCommand<Unit, Unit> PreviousWeek { get; }
 }

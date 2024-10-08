@@ -11,23 +11,35 @@ public class LessonViewModel : ReactiveObject
 {
     private Lesson? _lesson;
     private readonly ScheduleDbContext _context;
-    private bool _isActive = true;
-    public bool IsActive
-    {
-        get => _isActive;
-        set => this.RaiseAndSetIfChanged(ref this._isActive, value);
-    }
+    private SemaphoreSlim _semaphore;
 
-    public LessonViewModel(Lesson lesson, ScheduleDbContext context)
+    public LessonViewModel(Lesson lesson, ScheduleDbContext context, SemaphoreSlim semaphore)
     {
+        _semaphore = semaphore;
         _context = context;
         _lesson = lesson;
 
-        DeleteLesson = ReactiveCommand.Create(() =>
+        DeleteLesson = ReactiveCommand.CreateFromTask(async () =>
         {
-            _context.Lessons.Remove(_lesson);
-            _context.SaveChanges();
-            IsActive = false;
+            await _semaphore.WaitAsync();
+            try
+            {
+                _context.Lessons.Remove(_lesson);
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
+
+            await _semaphore.WaitAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
         });
     }
 

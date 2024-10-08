@@ -97,6 +97,16 @@ public partial class MainWindow
                     viewModel => viewModel.AddNewLesson,
                     view => view.addButton)
                 .DisposeWith(disposableRegistration);
+
+            this.BindCommand(ViewModel,
+                    viewModel => viewModel.NextWeek,
+                    view => view.nextButton)
+                .DisposeWith(disposableRegistration);
+
+            this.BindCommand(ViewModel,
+                    viewModel => viewModel.PreviousWeek,
+                    view => view.previousButton)
+                .DisposeWith(disposableRegistration);
         });
     }
 
