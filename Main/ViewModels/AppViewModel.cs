@@ -11,7 +11,7 @@ namespace Main.ViewModels;
 public class AppViewModel : ReactiveObject
 {
     private readonly SemaphoreSlim _semaphore  = new SemaphoreSlim(1, 1);  // Semaphore to control access;
-    public ScheduleDbContext _context = new();
+    public ScheduleDbContext _context;
     private DateTime _selectedDate = DateTime.Now;
     public DateTime SelectedDate
     {
@@ -100,8 +100,9 @@ public class AppViewModel : ReactiveObject
     //observable list of DayScheduleViewModels
     public IEnumerable<DayScheduleViewModel> DayScheduleViewModels { get; }
 
-    public AppViewModel()
+    public AppViewModel(ScheduleDbContext context)
     {
+        _context = context;
         _context.Teachers.Load();
         Teachers = _context.Teachers.Local.ToObservableCollection();
 

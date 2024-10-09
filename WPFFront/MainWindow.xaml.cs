@@ -1,7 +1,9 @@
 ﻿using System.Reactive.Disposables;
 using System.Windows;
+using Main;
 using Main.Models;
 using Main.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using ReactiveUI;
 
 namespace WPFFront;
@@ -15,7 +17,16 @@ public partial class MainWindow
         typeComboBox.ItemsSource = Enum.GetValues(typeof(LessonType)).Cast<LessonType>();
         weekNumberComboBox.ItemsSource = Enum.GetValues(typeof(WeekNumber)).Cast<WeekNumber>();
         dayNumberComboBox.ItemsSource = Enum.GetValues(typeof(DayOfWeek)).Cast<DayOfWeek>();
-        ViewModel = new AppViewModel();
+
+        var mySqlOptions = new DbContextOptionsBuilder<ScheduleDbContext>()
+            .UseMySQL(
+            $"Server={Environment.GetEnvironmentVariable("DB_SERVER")};" +
+            $"Database={Environment.GetEnvironmentVariable("DB_NAME")};" +
+            $"Uid={Environment.GetEnvironmentVariable("DB_USER")};" +
+            $"Pwd={Environment.GetEnvironmentVariable("DB_PASS")};"
+            ).Options;
+        ViewModel = new AppViewModel(new ScheduleDbContext(mySqlOptions));
+
         teacherComboBox.ItemsSource = ViewModel.Teachers;
 
         this.WhenActivated(disposableRegistration =>

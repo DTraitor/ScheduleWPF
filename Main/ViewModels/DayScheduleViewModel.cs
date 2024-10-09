@@ -35,13 +35,7 @@ public class DayScheduleViewModel : ReactiveObject
         _schedule = this.WhenAnyValue(x => x.Date)
             .SelectMany(GetSchedule)
             .ObserveOn(RxApp.MainThreadScheduler)
-            .ToProperty(this, x => x.Schedule, scheduler: RxApp.MainThreadScheduler);
-        _schedule.ThrownExceptions.Subscribe(ex =>
-        {
-            return;
-        });
-
-
+            .ToProperty(this, x => x.Schedule);
         _schedule.ThrownExceptions.Subscribe(ex =>
         {
             return;
